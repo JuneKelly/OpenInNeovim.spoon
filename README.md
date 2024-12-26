@@ -2,10 +2,10 @@
 
 ## Installation
 
-Clone this repository to `~/.hammespoon/Spoons/OpenInNvim.spoon`, like so...
+Clone this repository to `~/.hammespoon/Spoons/OpenInNeovim.spoon`, like so...
 
 ```sh
-git clone https://github.com/JuneKelly/OpenInNvim.spoon ~/.hammerspoon/Spoons/OpenInNeovim.spoon
+git clone https://github.com/JuneKelly/OpenInNeovim.spoon ~/.hammerspoon/Spoons/OpenInNeovim.spoon
 ```
 
 ## Usage
