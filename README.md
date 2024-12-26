@@ -48,7 +48,7 @@ uuidgen
 # => 07048977-9...
 ```
 
-### 4. Configure OpenInNeovim, in Hammerspoon Config
+### 4. Configure OpenInNeovim, in Hammerspoon config
 
 Add the following to `~/.hammerspoon/init.lua`:
 
@@ -69,7 +69,9 @@ Quit and re-open Hammerspoon. Look in the Hammerspoon console, and you should se
 2024-12-26 14:26:31: [OpenInNeovim] Binding to URL event 'openInNeovim'.
 ```
 
-## 5. Configure Phoenix Live Reload to Trigger this URL Event
+### 5. Configure phoenix-live-reload to trigger this URL event
+
+See the ["Jumping to HEEX Function Definitions"](https://github.com/phoenixframework/phoenix_live_reload?tab=readme-ov-file#jumping-to-heex-function-definitions) section of the `phoenix_live_reload` README file.
 
 ```
 PLUG_EDITOR = 'hammerspoon://openInNeovim?token=<TOKEN>&file=__FILE__&line=__LINE__'
