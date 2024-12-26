@@ -91,7 +91,7 @@ Now, when you hold `d` and click a phoenix live-view component in the browser, i
 
 - `token`: (optional, default `nil`) if present, the URL _must_ include this token as a query parameter `token`. If the URL does not contain this parameter, or it does not match, then the error will be shown in a notification
 
-- `focusTerminalApp`: (optional, default `nil`) if present, bring this app to the foreground after the file has been opened. Must be the name of a MacOS app, like `"iTerm2"`
+- `foregroundApp`: (optional, default `nil`) if present, bring this app to the foreground after the file has been opened. Must be the name of a MacOS app, like `"iTerm2"`
 
 - `eventName`: (optional, default `"openInNeovim"`)
 
@@ -106,7 +106,7 @@ openInNeovim.bind({
  nvimPath = "/opt/homebrew/bin/nvim",
  nvimServerPipePath = "/Users/somebody/.cache/nvim/server.pipe",
  token = "a_dreadful_secret",
- focusTerminalApp = "iTerm2",
+ foregroundApp = "iTerm2",
   eventName = "customOpenInNeoVimForSomeReason",
   translateRootPath = {
     from = "/app/inside/docker/",

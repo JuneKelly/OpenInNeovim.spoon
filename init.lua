@@ -23,7 +23,22 @@ local function validateConfig(config)
 		return false
 	end
 
+	if config.translateRootPath ~= nil then
+		if config.translateRootPath.from == nil or config.translateRootPath.to == nil then
+			log("ERROR: config.translateRootPath requires both 'from' and 'to' fields in present")
+			return false
+		end
+	end
+
 	return true
+end
+
+local function buildFilePath(filePath, config)
+	if config.translateRootPath == nil then
+		return filePath
+	else
+		return filePath:gsub("^" .. config.translateRootPath.from, config.translateRootPath.to)
+	end
 end
 
 function obj.bind(config)
@@ -50,7 +65,7 @@ function obj.bind(config)
 
 			return
 		else
-			local filePath = params.file
+			local filePath = buildFilePath(params.file, config)
 			local lineNumber = params.line
 
 			hs.task
@@ -69,8 +84,8 @@ function obj.bind(config)
 				})
 				:send()
 
-			if config.focusTerminalApp then
-				local app = hs.application.find(config.focusTerminalApp)
+			if config.foregroundApp then
+				local app = hs.application.find(config.foregroundApp)
 				app:setFrontmost(true)
 			end
 		end
