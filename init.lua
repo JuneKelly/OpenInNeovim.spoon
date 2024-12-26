@@ -1,4 +1,4 @@
--- ===== Open in Nvim =====
+-- ===== Open in Neovim =====
 
 local obj = {}
 
@@ -9,28 +9,49 @@ obj.version = "1.0"
 obj.author = "June Kelly"
 obj.license = "MIT - https://opensource.org/licenses/MIT"
 
+local function log(logString)
+	print("[OpenInNeovim] " .. logString)
+end
+
+local function validateConfig(config)
+	if config.nvimPath == nil then
+		log("ERROR: config.nvimPath is required")
+		return false
+	end
+	if config.nvimServerPipePath == nil then
+		log("ERROR: config.nvimServerPipePath is required")
+		return false
+	end
+
+	return true
+end
+
 function obj.bind(config)
+	if not validateConfig(config) then
+		return
+	end
+
 	local eventName = config.eventName or "openInNeovim"
 
-	print("[OpenInNeovim] Binding to event '" .. eventName .. "'.")
+	log("Binding to URL event '" .. eventName .. "'")
 
 	hs.urlevent.bind(eventName, function(_eventName, params)
-		if config.token and (params["token"] ~= config.token) then
+		if config.token and (params.token ~= config.token) then
 			local params_json = hs.json.encode(params)
 
-			print("Open in Nvim: INVALID TOKEN!!!", params_json)
+			log("Invalid Token! " .. params_json)
 
 			hs.notify
 				.new({
-					title = "Open in Nvim: INVALID TOKEN!!!",
+					title = "Open in Neovim: Invalid Token!",
 					informativeText = params_json,
 				})
 				:send()
 
 			return
 		else
-			local filePath = params["file"]
-			local lineNumber = params["line"]
+			local filePath = params.file
+			local lineNumber = params.line
 
 			hs.task
 				.new(config.nvimPath, nil, {
@@ -43,7 +64,7 @@ function obj.bind(config)
 
 			hs.notify
 				.new({
-					title = "Opened in Nvim",
+					title = "Opened in Neovim",
 					informativeText = filePath .. ":" .. lineNumber,
 				})
 				:send()

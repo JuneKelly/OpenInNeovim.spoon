@@ -1,5 +1,7 @@
 # HammerSpoon - Open in Neovim
 
+Set up a URL event to open a file in neovim. Can be used with [phoenix-live-reload](https://github.com/phoenixframework/phoenix_live_reload) to jump to the definition (or caller) of a phoenix live-view component.
+
 ## Installation
 
 Clone this repository to `~/.hammespoon/Spoons/OpenInNeovim.spoon`, like so...
@@ -14,6 +16,7 @@ git clone https://github.com/JuneKelly/OpenInNeovim.spoon ~/.hammerspoon/Spoons/
 
 ```sh
 command -v nvim
+# => /opt/homebrew/bin/nvim
 ```
 
 ### 2. Start `nvim` with `--listen`, and a path to a pipe file
@@ -22,7 +25,7 @@ command -v nvim
 nvim --listen ~/.cache/nvim/server.pipe
 ```
 
-You can make this easier by creating an alias, for example, in `zsh`:
+You can make this easier to do repeatedly by creating an alias, for example, in `zsh`:
 
 ```sh
 alias nvim-server 'nvim --listen ~/.cache/nvim/server.pipe'
@@ -38,7 +41,12 @@ alias --save nvim-server='nvim --listen ~/.cache/nvim/server.pipe'
 
 An easy way to do this is by running `uuidgen` in the shell.
 
-### 4. Configure OpenInNeovim, in Hammerspoon config file
+```sh
+uuidgen
+# => 07048977-9...
+```
+
+### 4. Configure OpenInNeovim, in Hammerspoon Config
 
 Add the following to `~/.hammerspoon/init.lua`:
 
@@ -46,8 +54,8 @@ Add the following to `~/.hammerspoon/init.lua`:
 openInNeovim = hs.loadSpoon("OpenInNeovim")
 
 openInNeovim.bind({
- nvimPath = "<Full path to nvim executable>",
- nvimServerPipePath = "< full path to nvim server pipe>",
+ nvimPath = "<full path to nvim executable>",
+ nvimServerPipePath = "<full path to nvim server pipe>",
  token = "<random token string>",
 })
 ```
@@ -56,5 +64,29 @@ Quit and re-open Hammerspoon. Look in the Hammerspoon console, and you should se
 
 ```
 2024-12-26 14:26:31: -- Loading Spoon: OpenInNeovim
-2024-12-26 14:26:31: [OpenInNeovim] Binding to event 'openInNeovim'.
+2024-12-26 14:26:31: [OpenInNeovim] Binding to URL event 'openInNeovim'.
 ```
+
+## 5. Configure Phoenix Live Reload to Trigger this URL Event
+
+```
+PLUG_EDITOR = 'hammerspoon://openInNeovim?token=<TOKEN>&file=__FILE__&line=__LINE__'
+```
+
+Now, when you hold `d` and click a phoenix live-view component in the browser, it _should_ open the component definition in neovim, and show a notification to that effect. If not, check the hammerspoon logs.
+
+## Configuration
+
+`openInNeovim.bind` takes the following configuration options:
+
+- `nvimPath`: (required) full path to the `nvim` executable.
+- `nvimServerPipePath`: (required) full path to the `nvim` server pipe file.
+- `token`: (optional, default `nil`) if present, the URL _must_ include this token as a query parameter `token`. If the URL does not contain this parameter, or it does not match, then the error will be shown in a notification
+- `focusTerminalApp`: (optional, default `nil`) if present, bring this app to the foreground after the file has been opened. Must be the name of a MacOS app, like `"iTerm2"`
+- `eventName`: (optional, default `"openInNeovim"`)
+
+## URL Parameters
+
+- `file`: path to the file to open
+- `line`: line number to open
+- `token`: (optional) secret token to check against `config.token`
