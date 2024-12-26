@@ -4,7 +4,9 @@ Set up a [HammerSpoon](https://www.hammerspoon.org/) URL event to open a file in
 
 ## Installation
 
-Clone this repository to `~/.hammerspoon/Spoons/OpenInNeovim.spoon`, like so...
+First, install [HammerSpoon](https://www.hammerspoon.org/).
+
+Then, clone this repository to `~/.hammerspoon/Spoons/OpenInNeovim.spoon`, like so...
 
 ```sh
 git clone https://github.com/JuneKelly/OpenInNeovim.spoon ~/.hammerspoon/Spoons/OpenInNeovim.spoon
