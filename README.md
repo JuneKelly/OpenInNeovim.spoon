@@ -101,7 +101,7 @@ The following query parameters are supported:
 
 - `nvimServerPipePath`: (required) full path to the `nvim` server pipe file.
 
-- `token`: (optional, default `nil`) if present, the URL _must_ include this token as a query parameter `token`. If the URL does not contain this parameter, or it does not match, then the error will be shown in a notification
+- `token`: (optional, default `nil`) if present, the URL _must_ include this token as a query parameter `token`. If the URL does not contain this parameter, or it does not match, then the error will be shown in a notification. Usage of `token` is optional, but recommended to ensure that this feature is triggered only by URLs you have intentionally set up to do so.
 
 - `foregroundApp`: (optional, default `nil`) if present, bring this app to the foreground after the file has been opened. Must be the name of a MacOS app, like `"iTerm2"`
 
