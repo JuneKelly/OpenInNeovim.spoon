@@ -97,17 +97,17 @@ The following query parameters are supported:
 
 `openInNeovim.bind` takes the following configuration options:
 
-- `nvimPath`: (required) full path to the `nvim` executable.
+- `nvimPath`: (required) full path to the `nvim` executable
 
-- `nvimServerPipePath`: (required) full path to the `nvim` server pipe file.
+- `nvimServerPipePath`: (required) full path to the `nvim` server pipe file
 
-- `token`: (optional, default `nil`) if present, the URL _must_ include this token as a query parameter `token`. If the URL does not contain this parameter, or it does not match, then the error will be shown in a notification. Usage of `token` is optional, but recommended to ensure that this feature is triggered only by URLs you have intentionally set up to do so.
+- `token`: (optional, default `nil`) if present, the URL _must_ include this token as a query parameter `token`. If the URL does not contain this parameter, or it does not match, then the error will be shown in a notification. Usage of `token` is optional, but recommended to ensure that this feature is triggered only by URLs you have intentionally set up to do so
 
 - `foregroundApp`: (optional, default `nil`) if present, bring this app to the foreground after the file has been opened. Must be the name of a MacOS app, like `"iTerm2"`
 
-- `eventName`: (optional, default `"openInNeovim"`)
+- `eventName`: (optional, default `"openInNeovim"`) name of the hammerspoon event, which in practice means the part of the URL that comes after `hammerspoon://`.
 
-- `translateRootPath`: (optional, default `nil`) a table with two fields: `from`, and `to`. If non-nil, the file path is altered to replace the segment matching `from` at the start, with to string `to`. Useful if your phoenix server runs in a docker environment where it's filesystem is different from the host where your `nvim` editor is running.
+- `translateRootPath`: (optional, default `nil`) a table with two fields: `from`, and `to`. If non-nil, the file path is altered to replace the segment matching `from` at the start, with to string `to`. Useful if your phoenix server runs in a docker environment where it's filesystem is different from the host where your `nvim` editor is running
 
 Here's an example using all of the configuration options:
 
