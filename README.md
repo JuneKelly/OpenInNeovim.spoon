@@ -1,6 +1,6 @@
 # HammerSpoon - Open in Neovim
 
-Set up a URL event to open a file in neovim. Can be used with [phoenix-live-reload](https://github.com/phoenixframework/phoenix_live_reload) to jump to the definition (or caller) of a phoenix live-view component.
+Set up a [HammerSpoon](https://www.hammerspoon.org/) URL event to open a file in neovim. Can be used with [phoenix-live-reload](https://github.com/phoenixframework/phoenix_live_reload) to jump to the definition (or caller) of a phoenix live-view component.
 
 ## Installation
 
