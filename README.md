@@ -107,7 +107,7 @@ openInNeovim.bind({
  nvimServerPipePath = "/Users/somebody/.cache/nvim/server.pipe",
  token = "a_dreadful_secret",
  foregroundApp = "iTerm2",
-  eventName = "customOpenInNeoVimForSomeReason",
+  eventName = "aNiceCustomEventName",
   translateRootPath = {
     from = "/app/inside/docker/",
     to = "/Users/somebody/projects/cool-web-app/"
