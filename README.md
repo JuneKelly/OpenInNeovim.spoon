@@ -75,10 +75,18 @@ PLUG_EDITOR = 'hammerspoon://openInNeovim?token=<TOKEN>&file=__FILE__&line=__LIN
 
 Now, when you hold `d` and click a phoenix live-view component in the browser, it _should_ open the component definition in neovim, and show a notification to that effect. If not, check the hammerspoon logs.
 
-## URL Parameters
+## URL Format
 
-- `file`: path to the file to open
-- `line`: line number to open
+This code is triggered by opening a URL that looks like:
+
+```
+hammerspoon://openInNeovim?file=<File Path>&line=<Line Number>
+```
+
+The following query parameters are supported:
+
+- `file`: (required) path to the file to open
+- `line`: (required) line number to open
 - `token`: (optional) secret token to check against `config.token`
 
 ## Configuration
