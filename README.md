@@ -75,18 +75,42 @@ PLUG_EDITOR = 'hammerspoon://openInNeovim?token=<TOKEN>&file=__FILE__&line=__LIN
 
 Now, when you hold `d` and click a phoenix live-view component in the browser, it _should_ open the component definition in neovim, and show a notification to that effect. If not, check the hammerspoon logs.
 
-## Configuration
-
-`openInNeovim.bind` takes the following configuration options:
-
-- `nvimPath`: (required) full path to the `nvim` executable.
-- `nvimServerPipePath`: (required) full path to the `nvim` server pipe file.
-- `token`: (optional, default `nil`) if present, the URL _must_ include this token as a query parameter `token`. If the URL does not contain this parameter, or it does not match, then the error will be shown in a notification
-- `focusTerminalApp`: (optional, default `nil`) if present, bring this app to the foreground after the file has been opened. Must be the name of a MacOS app, like `"iTerm2"`
-- `eventName`: (optional, default `"openInNeovim"`)
-
 ## URL Parameters
 
 - `file`: path to the file to open
 - `line`: line number to open
 - `token`: (optional) secret token to check against `config.token`
+
+## Configuration
+
+`openInNeovim.bind` takes the following configuration options:
+
+- `nvimPath`: (required) full path to the `nvim` executable.
+
+- `nvimServerPipePath`: (required) full path to the `nvim` server pipe file.
+
+- `token`: (optional, default `nil`) if present, the URL _must_ include this token as a query parameter `token`. If the URL does not contain this parameter, or it does not match, then the error will be shown in a notification
+
+- `focusTerminalApp`: (optional, default `nil`) if present, bring this app to the foreground after the file has been opened. Must be the name of a MacOS app, like `"iTerm2"`
+
+- `eventName`: (optional, default `"openInNeovim"`)
+
+- `translateRootPath`: (optional, default `nil`) a table with two fields: `from`, and `to`. If non-nil, the file path is altered to replace the segment matching `from` at the start, with to string `to`. Useful if your phoenix server runs in a docker environment where it's filesystem is different from the host where your `nvim` editor is running.
+
+Here's an example using all of the configuration options:
+
+```lua
+openInNeovim = hs.loadSpoon("OpenInNeovim")
+
+openInNeovim.bind({
+ nvimPath = "/opt/homebrew/bin/nvim",
+ nvimServerPipePath = "/Users/somebody/.cache/nvim/server.pipe",
+ token = "a_dreadful_secret",
+ focusTerminalApp = "iTerm2",
+  eventName = "customOpenInNeoVimForSomeReason",
+  translateRootPath = {
+    from = "/app/inside/docker/",
+    to = "/Users/somebody/projects/cool-web-app/"
+  }
+})
+```
