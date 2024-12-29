@@ -1,17 +1,22 @@
 # HammerSpoon - Open in Neovim
 
-Set up a [HammerSpoon](https://www.hammerspoon.org/) URL event to open a file in neovim. Can be used with [phoenix-live-reload](https://github.com/phoenixframework/phoenix_live_reload) to jump to the definition (or caller) of a phoenix live-view component.
+Set up a [HammerSpoon](https://www.hammerspoon.org/) URL event to open a file
+in neovim. Can be used with
+[phoenix-live-reload](https://github.com/phoenixframework/phoenix_live_reload)
+to jump to the definition (or caller) of a phoenix live-view component.
 
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration](#configuration)
 - [URL Format](#url-format)
+- [License](#license)
 
 ## Installation
 
 First, install [HammerSpoon](https://www.hammerspoon.org/).
 
-Then, clone this repository to `~/.hammerspoon/Spoons/OpenInNeovim.spoon`, like so...
+Then, clone this repository to `~/.hammerspoon/Spoons/OpenInNeovim.spoon`, like
+so...
 
 ```sh
 git clone https://github.com/JuneKelly/OpenInNeovim.spoon ~/.hammerspoon/Spoons/OpenInNeovim.spoon
@@ -32,7 +37,8 @@ command -v nvim
 nvim --listen ~/.cache/nvim/server.pipe
 ```
 
-You can make this easier to do repeatedly by creating an alias, for example, in `zsh`:
+You can make this easier to do repeatedly by creating an alias, for example, in
+`zsh`:
 
 ```sh
 alias nvim-server 'nvim --listen ~/.cache/nvim/server.pipe'
@@ -67,7 +73,9 @@ openInNeovim.bind({
 })
 ```
 
-Quit and re-open Hammerspoon. Look in the Hammerspoon console, and you should see log lines indicating that OpenInNeovim has been loaded, and a URL handler has been bound:
+Quit and re-open Hammerspoon. Look in the Hammerspoon console, and you should
+see log lines indicating that OpenInNeovim has been loaded, and a URL handler
+has been bound:
 
 ```
 2024-12-26 14:26:31: -- Loading Spoon: OpenInNeovim
@@ -131,3 +139,27 @@ The following query parameters are supported:
 - `file`: (required) path to the file to open
 - `line`: (required) line number to open
 - `token`: (optional) secret token to check against `config.token`
+
+## License
+
+This software is published under the MIT license:
+
+Copyright 2025 June Kelly
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the “Software”), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
