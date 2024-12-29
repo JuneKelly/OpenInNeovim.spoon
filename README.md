@@ -6,9 +6,10 @@ in neovim. Can be used with
 to jump to the definition (or caller) of a phoenix live-view component.
 
 - [Installation](#installation)
+- [API Documentation](#api-documentation)
+  - [`openInNeovim.bind`](#openinneovim-bind)
+  - [URL Format](#url-format)
 - [Usage](#usage)
-- [Configuration](#configuration)
-- [URL Format](#url-format)
 - [License](#license)
 
 ## Installation
@@ -21,6 +22,76 @@ so...
 ```sh
 git clone https://github.com/JuneKelly/OpenInNeovim.spoon ~/.hammerspoon/Spoons/OpenInNeovim.spoon
 ```
+
+## API Documentation
+
+In hammerspoon code (either in the console, or in `~/.hammerspoon/init.lua`),
+this spoon can be loaded like so:
+
+```lua
+openInNeovim = hs.loadSpoon("OpenInNeovim")
+```
+
+### `openInNeovim.bind`
+
+To bind a URL event handler, call `openInNeovim.bind`, with a table of
+configuration options:
+
+- `nvimPath`: (required) full path to the `nvim` executable
+
+- `nvimServerPipePath`: (required) full path to the `nvim` server pipe file
+
+- `token`: (optional, default `nil`) if present, the URL _must_ include this
+token as a query parameter `token`. If the URL does not contain this parameter,
+or it does not match, then the error will be shown in a notification. Usage of
+`token` is optional, but recommended to ensure that this feature is triggered
+only by URLs you have intentionally set up to do so
+
+- `foregroundApp`: (optional, default `nil`) if present, bring this app to the
+foreground after the file has been opened. Must be the name of a MacOS app,
+like `"iTerm2"`
+
+- `eventName`: (optional, default `"openInNeovim"`) name of the hammerspoon
+event, which in practice means the part of the URL that comes after
+`hammerspoon://`.
+
+- `translateRootPath`: (optional, default `nil`) a table with two fields:
+`from`, and `to`. If non-nil, the file path is altered to replace the segment
+matching `from` at the start, with to string `to`. Useful if your phoenix
+server runs in a docker environment where it's filesystem is different from the
+host where your `nvim` editor is running
+
+Here's an example using all of the configuration options:
+
+```lua
+openInNeovim = hs.loadSpoon("OpenInNeovim")
+
+openInNeovim.bind({
+ nvimPath = "/opt/homebrew/bin/nvim",
+ nvimServerPipePath = "/Users/somebody/.cache/nvim/server.pipe",
+ token = "a_dreadful_secret",
+ foregroundApp = "iTerm2",
+  eventName = "aNiceCustomEventName",
+  translateRootPath = {
+    from = "/app/inside/docker/",
+    to = "/Users/somebody/projects/cool-web-app/"
+  }
+})
+```
+
+### URL Format
+
+This event handler is triggered by opening a URL that looks like:
+
+```
+hammerspoon://openInNeovim?file=<File Path>&line=<Line Number>
+```
+
+The following query parameters are supported:
+
+- `file`: (required) path to the file to open (URL encoded)
+- `line`: (required) line number to open
+- `token`: (optional) secret token to check against `config.token`
 
 ## Usage
 
@@ -91,54 +162,6 @@ PLUG_EDITOR = 'hammerspoon://openInNeovim?token=<TOKEN>&file=__FILE__&line=__LIN
 ```
 
 Now, when you hold `d` and click a phoenix live-view component in the browser, it _should_ open the component definition in neovim, and show a notification to that effect. If not, check the hammerspoon logs.
-
-## Configuration
-
-`openInNeovim.bind` takes the following configuration options:
-
-- `nvimPath`: (required) full path to the `nvim` executable
-
-- `nvimServerPipePath`: (required) full path to the `nvim` server pipe file
-
-- `token`: (optional, default `nil`) if present, the URL _must_ include this token as a query parameter `token`. If the URL does not contain this parameter, or it does not match, then the error will be shown in a notification. Usage of `token` is optional, but recommended to ensure that this feature is triggered only by URLs you have intentionally set up to do so
-
-- `foregroundApp`: (optional, default `nil`) if present, bring this app to the foreground after the file has been opened. Must be the name of a MacOS app, like `"iTerm2"`
-
-- `eventName`: (optional, default `"openInNeovim"`) name of the hammerspoon event, which in practice means the part of the URL that comes after `hammerspoon://`.
-
-- `translateRootPath`: (optional, default `nil`) a table with two fields: `from`, and `to`. If non-nil, the file path is altered to replace the segment matching `from` at the start, with to string `to`. Useful if your phoenix server runs in a docker environment where it's filesystem is different from the host where your `nvim` editor is running
-
-Here's an example using all of the configuration options:
-
-```lua
-openInNeovim = hs.loadSpoon("OpenInNeovim")
-
-openInNeovim.bind({
- nvimPath = "/opt/homebrew/bin/nvim",
- nvimServerPipePath = "/Users/somebody/.cache/nvim/server.pipe",
- token = "a_dreadful_secret",
- foregroundApp = "iTerm2",
-  eventName = "aNiceCustomEventName",
-  translateRootPath = {
-    from = "/app/inside/docker/",
-    to = "/Users/somebody/projects/cool-web-app/"
-  }
-})
-```
-
-## URL Format
-
-This URL event is triggered by opening a URL that looks like:
-
-```
-hammerspoon://openInNeovim?file=<File Path>&line=<Line Number>
-```
-
-The following query parameters are supported:
-
-- `file`: (required) path to the file to open
-- `line`: (required) line number to open
-- `token`: (optional) secret token to check against `config.token`
 
 ## License
 
