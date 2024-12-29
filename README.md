@@ -7,7 +7,7 @@ to jump to the definition (or caller) of a phoenix live-view component.
 
 - [Installation](#installation)
 - [API Documentation](#api-documentation)
-  - [`openInNeovim.bind`](#openinneovim-bind)
+  - [Configuration Options](#configuration-options)
   - [URL Format](#url-format)
 - [Usage](#usage)
 - [License](#license)
@@ -32,10 +32,10 @@ this spoon can be loaded like so:
 openInNeovim = hs.loadSpoon("OpenInNeovim")
 ```
 
-### `openInNeovim.bind`
-
 To bind a URL event handler, call `openInNeovim.bind`, with a table of
-configuration options:
+configuration options.
+
+### Configuration Options
 
 - `nvimPath`: (required) full path to the `nvim` executable
 
