@@ -4,8 +4,8 @@ Set up a [HammerSpoon](https://www.hammerspoon.org/) URL event to open a file in
 
 - [Installation](#installation)
 - [Usage](#usage)
-- [Configuration](configuration)
-- [URL Format](url-format)
+- [Configuration](#configuration)
+- [URL Format](#url-format)
 
 ## Installation
 
