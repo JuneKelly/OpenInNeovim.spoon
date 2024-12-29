@@ -38,8 +38,11 @@ configuration options.
 ### Configuration Options
 
 - `nvimPath`: (required) full path to the `nvim` executable
+  - (this can be found easily by running `command -v nvim` in your shell)
 
 - `nvimServerPipePath`: (required) full path to the `nvim` server pipe file
+  - (this is the file path you provided when starting `nvim` with the
+  `--listen` flag)
 
 - `token`: (optional, default `nil`) if present, the URL _must_ include this
 token as a query parameter `token`. If the URL does not contain this parameter,
@@ -49,7 +52,7 @@ only by URLs you have intentionally set up to do so
 
 - `foregroundApp`: (optional, default `nil`) if present, bring this app to the
 foreground after the file has been opened. Must be the name of a MacOS app,
-like `"iTerm2"`
+like `"iTerm2"` or `Ghostty`
 
 - `eventName`: (optional, default `"openInNeovim"`) name of the hammerspoon
 event, which in practice means the part of the URL that comes after
@@ -67,10 +70,10 @@ Here's an example using all of the configuration options:
 openInNeovim = hs.loadSpoon("OpenInNeovim")
 
 openInNeovim.bind({
- nvimPath = "/opt/homebrew/bin/nvim",
- nvimServerPipePath = "/Users/somebody/.cache/nvim/server.pipe",
- token = "a_dreadful_secret",
- foregroundApp = "iTerm2",
+  nvimPath = "/opt/homebrew/bin/nvim",
+  nvimServerPipePath = "/Users/somebody/.cache/nvim/server.pipe",
+  token = "a_dreadful_secret",
+  foregroundApp = "iTerm2",
   eventName = "aNiceCustomEventName",
   translateRootPath = {
     from = "/app/inside/docker/",
@@ -83,7 +86,7 @@ openInNeovim.bind({
 
 This event handler is triggered by opening a URL that looks like:
 
-```
+```txt
 hammerspoon://openInNeovim?file=<File Path>&line=<Line Number>
 ```
 
@@ -148,20 +151,27 @@ Quit and re-open Hammerspoon. Look in the Hammerspoon console, and you should
 see log lines indicating that OpenInNeovim has been loaded, and a URL handler
 has been bound:
 
-```
+```txt
 2024-12-26 14:26:31: -- Loading Spoon: OpenInNeovim
-2024-12-26 14:26:31: [OpenInNeovim] Binding to URL event 'openInNeovim'.
+2024-12-26 14:26:31: [OpenInNeovim] Bind {
+  ...
+}
+2024-12-26 14:26:31: [OpenInNeovim] Binding to URL 'openInNeovim'
 ```
 
 ### 5. Configure phoenix-live-reload to trigger this URL event
 
-See the ["Jumping to HEEX Function Definitions"](https://github.com/phoenixframework/phoenix_live_reload?tab=readme-ov-file#jumping-to-heex-function-definitions) section of the `phoenix_live_reload` README file.
+See the ["Jumping to HEEX Function
+Definitions"](https://github.com/phoenixframework/phoenix_live_reload?tab=readme-ov-file#jumping-to-heex-function-definitions)
+section of the `phoenix_live_reload` README file.
 
-```
+```txt
 PLUG_EDITOR = 'hammerspoon://openInNeovim?token=<TOKEN>&file=__FILE__&line=__LINE__'
 ```
 
-Now, when you hold `d` and click a phoenix live-view component in the browser, it _should_ open the component definition in neovim, and show a notification to that effect. If not, check the hammerspoon logs.
+Now, when you hold `d` and click a phoenix live-view component in the browser,
+it _should_ open the component definition in neovim, and show a notification to
+that effect. If not, check the hammerspoon logs.
 
 ## License
 

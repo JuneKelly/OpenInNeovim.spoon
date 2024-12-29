@@ -42,13 +42,15 @@ local function buildFilePath(filePath, config)
 end
 
 function obj.bind(config)
-	log("Binding URL event" .. hs.inspect.inspect(config))
+	log("Bind " .. hs.inspect.inspect(config))
 
 	if not validateConfig(config) then
 		return
 	end
 
 	local eventName = config.eventName or "openInNeovim"
+
+	log("Binding to URL '" .. eventName .. "'")
 
 	hs.urlevent.bind(eventName, function(_eventName, params)
 		if config.token and (params.token ~= config.token) then
