@@ -73,7 +73,7 @@ function obj.bind(config)
 					"--server",
 					config.nvimServerPipePath,
 					"--remote-send",
-					"<ESC><ESC><ESC><ESC>:e " .. filePath .. "<CR>" .. lineNumber .. "G",
+					"<ESC><ESC><ESC><ESC>:e " .. "+" .. lineNumber .. " " .. filePath .. "<CR>",
 				})
 				:start()
 
