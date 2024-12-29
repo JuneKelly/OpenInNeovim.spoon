@@ -2,6 +2,11 @@
 
 Set up a [HammerSpoon](https://www.hammerspoon.org/) URL event to open a file in neovim. Can be used with [phoenix-live-reload](https://github.com/phoenixframework/phoenix_live_reload) to jump to the definition (or caller) of a phoenix live-view component.
 
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](configuration)
+- [URL Format](url-format)
+
 ## Installation
 
 First, install [HammerSpoon](https://www.hammerspoon.org/).
@@ -79,20 +84,6 @@ PLUG_EDITOR = 'hammerspoon://openInNeovim?token=<TOKEN>&file=__FILE__&line=__LIN
 
 Now, when you hold `d` and click a phoenix live-view component in the browser, it _should_ open the component definition in neovim, and show a notification to that effect. If not, check the hammerspoon logs.
 
-## URL Format
-
-This code is triggered by opening a URL that looks like:
-
-```
-hammerspoon://openInNeovim?file=<File Path>&line=<Line Number>
-```
-
-The following query parameters are supported:
-
-- `file`: (required) path to the file to open
-- `line`: (required) line number to open
-- `token`: (optional) secret token to check against `config.token`
-
 ## Configuration
 
 `openInNeovim.bind` takes the following configuration options:
@@ -126,3 +117,17 @@ openInNeovim.bind({
   }
 })
 ```
+
+## URL Format
+
+This URL event is triggered by opening a URL that looks like:
+
+```
+hammerspoon://openInNeovim?file=<File Path>&line=<Line Number>
+```
+
+The following query parameters are supported:
+
+- `file`: (required) path to the file to open
+- `line`: (required) line number to open
+- `token`: (optional) secret token to check against `config.token`
