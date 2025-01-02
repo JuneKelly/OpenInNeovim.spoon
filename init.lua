@@ -102,7 +102,16 @@ function obj.bind(config)
 					"--server",
 					config.nvimServerPipePath,
 					"--remote-send",
-					"<ESC><ESC><ESC><ESC>:e " .. "+" .. lineNumber .. " " .. filePath .. "<CR>",
+					table.concat({
+						"<ESC><ESC><ESC><ESC>",
+						":e",
+						" ",
+						"+",
+						lineNumber,
+						" ",
+						filePath,
+						"<CR>",
+					}),
 				})
 				:start()
 
