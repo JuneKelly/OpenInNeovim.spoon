@@ -66,6 +66,12 @@ matching `from` at the start, with to string `to`. Useful if your phoenix
 server runs in a docker environment where it's filesystem is different from the
 host where your `nvim` editor is running
 
+- `skipValidateFileExists`: (optional, default `false`) By default, we check
+that the target file path is a real path, and exists, before sending the
+command to `nvim`. This helps defend against remote code execution attacks. If
+this option is set to `true`, the validation is skipped. This could be useful
+if the `nvim` instance is operating on a different filesystem from hammerspoon.
+
 Here's an example using all of the configuration options:
 
 ```lua
