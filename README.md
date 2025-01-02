@@ -37,6 +37,14 @@ configuration options.
 
 ### Configuration Options
 
+- `token`: (required, minimum length 12 characters) the URL _must_ include this
+token as a query parameter `token`. If the URL does not contain this parameter,
+or it does not match, then the error will be shown in a notification.
+  - Why is this required? As much as we try to defend against security issues,
+  in some sense this feature is fundamentally built around telling `nvim` to
+  execute some code, so it is best to guard the entry-point so it can only be
+  activated by URLs having this secret token.
+
 - `nvimPath`: (required) full path to the `nvim` executable
   - (this can be found easily by running `command -v nvim` in your shell)
 
@@ -44,19 +52,13 @@ configuration options.
   - (this is the file path you provided when starting `nvim` with the
   `--listen` flag)
 
-- `token`: (optional, default `nil`) if present, the URL _must_ include this
-token as a query parameter `token`. If the URL does not contain this parameter,
-or it does not match, then the error will be shown in a notification. Usage of
-`token` is optional, but recommended to ensure that this feature is triggered
-only by URLs you have intentionally set up to do so
+- `eventName`: (optional, default `"openInNeovim"`) name of the hammerspoon
+event, which in practice means the part of the URL that comes after
+`hammerspoon://`.
 
 - `foregroundApp`: (optional, default `nil`) if present, bring this app to the
 foreground after the file has been opened. Must be the name of a MacOS app,
 like `"iTerm2"` or `Ghostty`
-
-- `eventName`: (optional, default `"openInNeovim"`) name of the hammerspoon
-event, which in practice means the part of the URL that comes after
-`hammerspoon://`.
 
 - `translateRootPath`: (optional, default `nil`) a table with two fields:
 `from`, and `to`. If non-nil, the file path is altered to replace the segment

@@ -14,10 +14,21 @@ local function log(logString)
 end
 
 local function validateConfig(config)
+	if config.token == nil then
+		log("ERROR: config.token is required")
+		return false
+	end
+
+	if config.token:len() < 12 then
+		log("ERROR: config.token must be at least 12 characters")
+		return false
+	end
+
 	if config.nvimPath == nil then
 		log("ERROR: config.nvimPath is required")
 		return false
 	end
+
 	if config.nvimServerPipePath == nil then
 		log("ERROR: config.nvimServerPipePath is required")
 		return false
@@ -41,6 +52,10 @@ local function buildFilePath(filePath, config)
 	end
 end
 
+local function fileExists(filePath)
+	return hs.fs.attributes(filePath) ~= nil
+end
+
 function obj.bind(config)
 	log("Bind " .. hs.inspect.inspect(config))
 
@@ -53,9 +68,9 @@ function obj.bind(config)
 	log("Binding to URL '" .. eventName .. "'")
 
 	hs.urlevent.bind(eventName, function(_eventName, params)
-		if config.token and (params.token ~= config.token) then
-			local params_json = hs.json.encode(params)
+		local params_json = hs.json.encode(params)
 
+		if params.token ~= config.token then
 			log("Invalid Token! " .. params_json)
 
 			hs.notify
@@ -69,6 +84,18 @@ function obj.bind(config)
 		else
 			local filePath = buildFilePath(params.file, config)
 			local lineNumber = params.line
+
+			if tonumber(lineNumber) == nil then
+				log("ERROR: line number is not a valid number: '" .. lineNumber .. "'")
+				return
+			end
+
+			if config.skipValidateFileExists ~= true then
+				if fileExists(filePath) == false then
+					log("ERROR: file path does not exist '" .. filePath .. "'")
+					return
+				end
+			end
 
 			hs.task
 				.new(config.nvimPath, nil, {
