@@ -9,7 +9,9 @@ to jump to the definition (or caller) of a phoenix live-view component.
 - [API Documentation](#api-documentation)
   - [Configuration Options](#configuration-options)
   - [URL Format](#url-format)
-- [Usage](#usage)
+- [Usage Examples](#usage-examples)
+  - [Simple Example, with One Instance of Neovim](#simple-example-with-one-instance-of-neovim)
+  - [More Complex Example, with Multiple Projects](#more-complex-example-with-multiple-projects)
 - [License](#license)
 
 ## Installation
@@ -104,44 +106,57 @@ The following query parameters are supported:
 - `line`: (required) line number to open
 - `token`: (optional) secret token to check against `config.token`
 
-## Usage
+## Usage Examples
 
-### 1. Find the full path to `nvim`
+As a pre-requisite, we need to find the full path to the `nvim` executable:
 
 ```sh
 command -v nvim
-# => /opt/homebrew/bin/nvim
 ```
 
-### 2. Start `nvim` with `--listen`, and a path to a pipe file
+If you've installed neovim via [homebrew](https://brew.sh), then the result is probably something like `/opt/homebrew/bin/nvim`.
+
+### Simple Example with One Instance of Neovim
+
+In this example, we have one instance of `nvim`, acting as a server. We then
+configure OpenInNeovim to open files in this single `nvim` server. If you tend
+to work on one project at a time, this should be sufficient.
+
+#### 1. Start `nvim` with `--listen`, and a path to a pipe file
+
+To start `nvim` in server mode, we pass the `--listen <path>` parameter, where
+`<path>` is a path to a pipe file, which neovim will create:
 
 ```sh
 nvim --listen ~/.cache/nvim/server.pipe
 ```
 
-You can make this easier to do repeatedly by creating an alias, for example, in
+You can make this easier to do repeatedly by creating an alias. For example, in
 `zsh`:
 
 ```sh
+# add this to .zshrc
 alias nvim-server 'nvim --listen ~/.cache/nvim/server.pipe'
 ```
 
 ...or in `fish`:
 
 ```sh
+# run this once in fish shell
 alias --save nvim-server='nvim --listen ~/.cache/nvim/server.pipe'
 ```
 
-### 3. Generate a secret token
+#### 2. Generate a secret token
 
-An easy way to do this is by running `uuidgen` in the shell.
+We need a secret token, to secure this URL endpoint. An easy way to do this is
+by running `uuidgen` in the shell:
 
 ```sh
 uuidgen
 # => 07048977-9...
 ```
 
-### 4. Configure OpenInNeovim, in Hammerspoon config
+#### 3. Configure OpenInNeovim, in the Hammerspoon config file
 
 Add the following to `~/.hammerspoon/init.lua`:
 
@@ -167,7 +182,7 @@ has been bound:
 2024-12-26 14:26:31: [OpenInNeovim] Binding to URL 'openInNeovim'
 ```
 
-### 5. Configure phoenix-live-reload to trigger this URL event
+#### 4. Configure `phoenix_live_reload` to trigger this URL event
 
 See the ["Jumping to HEEX Function
 Definitions"](https://github.com/phoenixframework/phoenix_live_reload?tab=readme-ov-file#jumping-to-heex-function-definitions)
@@ -180,6 +195,10 @@ PLUG_EDITOR = 'hammerspoon://openInNeovim?token=<TOKEN>&file=__FILE__&line=__LIN
 Now, when you hold `d` and click a phoenix live-view component in the browser,
 it _should_ open the component definition in neovim, and show a notification to
 that effect. If not, check the hammerspoon logs.
+
+### More Complex Example, with Multiple Projects
+
+TODO
 
 ## License
 
