@@ -198,6 +198,10 @@ that effect. If not, check the hammerspoon logs.
 
 ### More Complex Example, with Multiple Projects
 
+The previous example doesn't work so well if we tend to keep multiple instances of neovim open at a given time, like if we work on several projects at once. In this case, we want to start multiple neovim servers, one for each project, and configure multiple instances of OpenInNeovim, each pointing to the relevant neovim server.
+
+#### 1. Start `nvim` with `--listen`, and a pipe file derived from the PWD
+
 TODO
 
 ## License
