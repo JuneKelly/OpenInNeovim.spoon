@@ -115,7 +115,9 @@ function obj.bind(config)
 
 			if config.foregroundApp then
 				local app = hs.application.find(config.foregroundApp)
-				app:setFrontmost(true)
+				if app then
+					app:setFrontmost(true)
+				end
 			end
 		end
 	end)
