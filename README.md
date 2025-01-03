@@ -12,8 +12,8 @@ to jump to the definition (or caller) of a phoenix live-view component.
   - [Configuration Options](#configuration-options)
   - [URL Format](#url-format)
 - [Usage Examples](#usage-examples)
-  - [Simple Example, with One Instance of Neovim](#simple-example-with-one-instance-of-neovim)
-  - [More Complex Example, with Multiple Projects](#more-complex-example-with-multiple-projects)
+  - [Minimal: One Instance of Neovim](#minimal-one-instance-of-neovim)
+  - [Realistic: Multiple Instances of Neovim](#realistic-multiple-instances-of-neovim)
 - [License](#license)
 
 ## Installation
@@ -118,7 +118,7 @@ command -v nvim
 
 If you've installed neovim via [homebrew](https://brew.sh), then the result is probably something like `/opt/homebrew/bin/nvim`.
 
-### Simple Example with One Instance of Neovim
+### Minimal: One Instance of Neovim
 
 In this example, we have one instance of `nvim`, acting as a server. We then
 configure OpenInNeovim to open files in this single `nvim` server. If you tend
@@ -198,7 +198,7 @@ Now, when you hold `d` and click a phoenix live-view component in the browser,
 it _should_ open the component definition in neovim, and show a notification to
 that effect. If not, check the hammerspoon logs.
 
-### More Complex Example, with Multiple Projects
+### Realistic: Multiple Instances of Neovim
 
 The previous example doesn't work so well if we tend to keep multiple instances of neovim open at a given time, like if we work on several projects at once. In this case, we want to start multiple neovim servers, one for each project, and configure multiple instances of OpenInNeovim, each pointing to the relevant neovim server.
 
