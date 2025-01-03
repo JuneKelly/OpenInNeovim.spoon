@@ -5,6 +5,8 @@ in neovim. Can be used with
 [phoenix-live-reload](https://github.com/phoenixframework/phoenix_live_reload)
 to jump to the definition (or caller) of a phoenix live-view component.
 
+![A demo of OpenInNeovim](./open-in-neovim-demo.gif)
+
 - [Installation](#installation)
 - [API Documentation](#api-documentation)
   - [Configuration Options](#configuration-options)
